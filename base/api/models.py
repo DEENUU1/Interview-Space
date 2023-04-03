@@ -47,4 +47,18 @@ class Question(models.Model):
         return self.name
 
 
+class Comment(models.Model):
+    id = models.AutoField()
+    name = models.CharField(max_length=50)
+    content = models.TextField()
+    date_create = models.DateTimeField(auto_now_add=True)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Comment'
+        verbose_name_plural = "Comments"
+
+    def __str__(self):
+        return self.name
