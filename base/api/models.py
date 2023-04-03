@@ -1,10 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Level(models.Model):
-    name = models.CharField(max_length=20, db_index=True)
+    name = models.CharField(max_length=20)
     short_desc = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=100, unique=True)
 
     class Meta:
         ordering = ('name',)
@@ -18,7 +18,6 @@ class Level(models.Model):
 class ProgrammingLang(models.Model):
     name = models.CharField(max_length=20, db_index=True)
     short_desc = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=100, unique=True)
 
     class Meta:
         ordering = ('name',)
@@ -30,10 +29,9 @@ class ProgrammingLang(models.Model):
 
 
 class Question(models.Model):
-    id = models.AutoField()
     name = models.CharField(max_length=50)
     content = models.TextField()
-    date_create = models.DateTimeField(auto_now_add=True)
+    date_create = models.DateTimeField(auto_now=True)
     programming_lang = models.ForeignKey(ProgrammingLang, on_delete=models.CASCADE)
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -48,7 +46,6 @@ class Question(models.Model):
 
 
 class Comment(models.Model):
-    id = models.AutoField()
     name = models.CharField(max_length=50)
     content = models.TextField()
     date_create = models.DateTimeField(auto_now_add=True)
@@ -62,3 +59,16 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Favourite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='favourites')
+
+    class Meta:
+        ordering = ('question',)
+        verbose_name = 'Favourite'
+        verbose_name_plural = 'Favourites'
+
+    def __str__(self):
+        return self.user.username
