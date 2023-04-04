@@ -4,7 +4,7 @@ from .views import (
     QuestionList,
     ProgrammingLangList,
     QuestionCreateView,
-
+    CommentList,
 
 )
 
@@ -15,6 +15,8 @@ urlpatterns = [
     path('questions/', QuestionList.as_view(), name='question-list'),
     path('question/create/', QuestionCreateView.as_view(), name='question-create'),
     path('languages/', ProgrammingLangList.as_view(), name='languages-list'),
+    path('comments/', CommentList.as_view(), name='commants-list'),
+
 
 
 

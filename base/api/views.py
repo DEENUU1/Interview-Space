@@ -80,9 +80,7 @@ class QuestionList(generics.ListAPIView):
         api_key = self.request.query_params.get('api_key', None)
         
         if api_key is None:
-            return queryset.none()  # zwraca pusty QuerySet, gdy brakuje klucza API
-
-        # filtrowanie pytań
+            return queryset.none() 
         if level is not None:
             queryset = queryset.filter(level=level)
         if programming_lang is not None:
@@ -98,7 +96,7 @@ class QuestionCreateView(generics.CreateAPIView):
     serializer_class = QuestionModelSerializer
     authentication_classes = (ApiKeyAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
-    
+
 
 class ProgrammingLangList(generics.ListAPIView):
     """
@@ -116,3 +114,25 @@ class ProgrammingLangList(generics.ListAPIView):
             return ProgrammingLang.objects.all()
         else:
             return None
+
+
+class CommentList(generics.ListAPIView):
+    """
+    
+    """
+    queryset = Comment.objects.all()
+    serializer_class = CommentModelSerializer
+    authentication_classes = (ApiKeyAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def get_queryset(self):
+        queryset = Comment.objects.all()
+        question = self.request.query_params.get('question', None)
+        api_key = self.request.query_params.get('api_key', None)
+        
+        if api_key is None:
+            return queryset.none() 
+        if question is not None:
+            queryset = queryset.filter(question=question)
+    
+        return queryset
