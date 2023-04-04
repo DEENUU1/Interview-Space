@@ -25,3 +25,15 @@ class ProgrammingLangModelSerializer(serializers.ModelSerializer):
         model = ProgrammingLang
         fields = ('name', 'short_desc')
 
+
+class QuestionModelSerializer(serializers.ModelSerializer):
+    """
+    Serializes a Question model instance into JSON-compatible data.
+    Attributes:
+        Meta: A class that contains metadata about the QuestionModelSerializer.
+        It specifies the model class to use and the fields to include in the serialized data.
+    """
+    class Meta:
+        model = Question
+        fields = ('name', 'content', 'content_code', 'date_create', 'programming_lang', 'level', 'author')
+
