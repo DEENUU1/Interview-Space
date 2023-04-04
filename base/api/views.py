@@ -79,3 +79,21 @@ class QuestionList(generics.ListAPIView):
             return Question.objects.all()
         else:
             return None
+
+
+class ProgrammingLangList(generics.ListAPIView):
+    """
+
+    """
+    queryset = ProgrammingLang.objects.all()
+    serializer_class = ProgrammingLangModelSerializer
+    authentication_classes = (ApiKeyAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    pagination_class = ApiPagination
+
+    def get_queryset(self):
+        api_key = self.request.query_params.get('api_key', None)
+        if api_key:
+            return ProgrammingLang.objects.all()
+        else:
+            return None
