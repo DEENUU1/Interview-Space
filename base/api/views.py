@@ -65,7 +65,7 @@ class LevelList(generics.ListAPIView):
 
 class QuestionList(generics.ListAPIView):
     """
-
+    /questions/?level=X&lang=X&api_key=X
     """
     queryset = Question.objects.all()
     serializer_class = QuestionModelSerializer
@@ -74,13 +74,22 @@ class QuestionList(generics.ListAPIView):
     pagination_class = ApiPagination
 
     def get_queryset(self):
+        queryset = Question.objects.all()
+        level = self.request.query_params.get('level', None)
+        programming_lang = self.request.query_params.get('lang', None)
         api_key = self.request.query_params.get('api_key', None)
-        if api_key:
-            return Question.objects.all()
-        else:
-            return None
+        
+        if api_key is None:
+            return queryset.none()  # zwraca pusty QuerySet, gdy brakuje klucza API
 
-
+        # filtrowanie pytań
+        if level is not None:
+            queryset = queryset.filter(level=level)
+        if programming_lang is not None:
+            queryset = queryset.filter(programming_lang=lang)
+        
+        return queryset
+    
 class ProgrammingLangList(generics.ListAPIView):
     """
 
