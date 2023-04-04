@@ -37,3 +37,15 @@ class QuestionModelSerializer(serializers.ModelSerializer):
         model = Question
         fields = ('name', 'content', 'content_code', 'date_create', 'programming_lang', 'level', 'author')
 
+
+class CommentModelSerializer(serializers.ModelSerializer):
+    """
+    Serializes a Comment model instance into JSON-compatible data.
+    Attributes:
+        Meta: A class that contains metadata about the CommentModelSerializer.
+        It specifies the model class to use and the fields to include in the serialized data.
+    """
+    class Meta:
+        model = Comment
+        fields = ('name', 'content', 'content_code', 'date_create', 'question', 'author')
+
