@@ -43,3 +43,21 @@ class ApiPagination(PageNumberPagination):
     page_size (int): The number of items to include on each page. Defaults to 2.
     """
     page_size = 10
+
+
+class LevelList(generics.ListAPIView):
+    """
+
+    """
+    queryset = Level.objects.all()
+    serializer_class = LevelModelSerializer
+    authentication_classes = (ApiKeyAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    pagination_class = ApiPagination
+
+    def get_queryset(self):
+        api_key = self.request.query_params.get('api_key', None)
+        if api_key:
+            return Level.objects.all()
+        else:
+            return None
