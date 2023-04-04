@@ -31,6 +31,7 @@ class ProgrammingLang(models.Model):
 class Question(models.Model):
     name = models.CharField(max_length=50)
     content = models.TextField()
+    content_code = models.TextField()
     date_create = models.DateTimeField(auto_now=True)
     programming_lang = models.ForeignKey(ProgrammingLang, on_delete=models.CASCADE)
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
@@ -48,6 +49,7 @@ class Question(models.Model):
 class Comment(models.Model):
     name = models.CharField(max_length=50)
     content = models.TextField()
+    content_code = models.TextField()
     date_create = models.DateTimeField(auto_now_add=True)
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
