@@ -5,6 +5,7 @@ from .views import (
     ProgrammingLangList,
     QuestionCreateView,
     CommentList,
+    AddToFavourite,
 
 )
 
@@ -16,7 +17,8 @@ urlpatterns = [
     path('question/create/', QuestionCreateView.as_view(), name='question-create'),
     path('languages/', ProgrammingLangList.as_view(), name='languages-list'),
     path('comments/', CommentList.as_view(), name='commants-list'),
-
+    path('questions/<int:question_id>/favourites/', AddToFavourite.as_view(), name='add-to-favourite'),
+    
 
 
 

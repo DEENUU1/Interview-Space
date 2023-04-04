@@ -10,9 +10,9 @@ from .serializers import (
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.authtoken.models import Token
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
 from rest_framework.pagination import PageNumberPagination
+from rest_framework import status
+from rest_framework.response import Response
 
 
 class ApiKeyAuthentication(TokenAuthentication):
@@ -84,7 +84,7 @@ class QuestionList(generics.ListAPIView):
         if level is not None:
             queryset = queryset.filter(level=level)
         if programming_lang is not None:
-            queryset = queryset.filter(programming_lang=lang)
+            queryset = queryset.filter(programming_lang=programming_lang)
         
         return queryset
     
@@ -136,3 +136,19 @@ class CommentList(generics.ListAPIView):
             queryset = queryset.filter(question=question)
     
         return queryset
+
+
+class AddToFavourite(generics.CreateAPIView):
+    """
+    
+    """
+    serializer_class = FavouriteModelSerializer
+    authentication_classes = (ApiKeyAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_object(self):
+        question_id = self.kwargs.get('question_id')
+        return generics.get_object_or_404(Question, id=question_id)
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user, question=self.get_object())
