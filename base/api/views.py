@@ -90,6 +90,16 @@ class QuestionList(generics.ListAPIView):
         
         return queryset
     
+
+class QuestionCreateView(generics.CreateAPIView):
+    """
+    
+    """
+    serializer_class = QuestionModelSerializer
+    authentication_classes = (ApiKeyAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    
+
 class ProgrammingLangList(generics.ListAPIView):
     """
 
