@@ -32,3 +32,8 @@ def login_user(request):
         return Response({'success': False, 'error': 'Invalid credentials'})
 
 
+@api_view(['POST'])
+def logout_user(request):
+    logout(request)
+    return Response({'success': True})
+
