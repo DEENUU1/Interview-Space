@@ -17,11 +17,37 @@
 
 ## Endpoints
 
+<img src="/images/endpoints.png"/>
+
+### GET /levels/
+Returns a list of levels 
+### GET /comments/<question_id>/
+Returns a list of comments for the specified question
+### POST /comments/create/{question_id}
+Allow user to create a new comment for a specified question id
+### POST /favourites/add/{question_id}/ 
+Allow authenticated users to add questions to their favourite list
+### POST /favourites/delete/{question_id}/ 
+Allow authenticated users to delete saved question from their list
+### GET /languages/ 
+Returns a list of all programming languages
+### GET /questions/ 
+Returns a list of all questions parameters: lang, level, category
+### GET /questions/{question_id}
+Returns a single question objects based on id 
+### POST /questions/create 
+Allow authenticated users to add a new question
+### POST /user/login/ 
+Allow user to log in 
+### POST /user/logout/
+Allow logged user to logout 
+### GET /user/profile/ 
+Allow authenticated user to get their list of saved questions 
+### POST /user/register/ 
+Allow user to create a new account with username, email and password
 
 
-
-
-### Project is based on technologies such as:
+## Project is based on technologies such as:
 - Python
 - Django
 - Django Rest Framework
@@ -57,11 +83,9 @@ Now run Django server using this command
 py manage.py runserver
 ```
 
-### Postman 
+## Postman 
 
-
-
-
+https://api.postman.com/collections/26593763-780af17f-042e-4275-9999-026babea8eca?access_key=PMAT-01GX8XG9EEMNQB5KYFHVYX0FR9
 
 ## Running Tests
 
