@@ -161,6 +161,19 @@ class CommentList(generics.ListAPIView):
         return queryset
 
 
+class CommentCreate(generics.CreateAPIView):
+    """
+    
+    """
+    serializer_class = CommentModelSerializer
+    authentication_classes = (ApiKeyAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        question_id = self.kwargs['question_id']
+        return Question.objects.filter(id=question_id)
+
+
 class AddToFavourite(generics.CreateAPIView):
     """
     
