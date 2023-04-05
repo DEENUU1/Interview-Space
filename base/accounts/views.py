@@ -20,5 +20,15 @@ def register(request):
     return Response({'success': True})
 
 
+@api_view(['POST'])
+def login_user(request):
+    username = request.data.get('username')
+    password = request.data.get('password')
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        return Response({'success': True})
+    else:
+        return Response({'success': False, 'error': 'Invalid credentials'})
 
 
