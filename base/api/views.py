@@ -5,7 +5,9 @@ from .serializers import (
     ProgrammingLangModelSerializer,
     QuestionModelSerializer,
     CommentModelSerializer,
-    FavouriteModelSerializer
+    FavouriteModelSerializer,
+    CategoryModelSerializer,
+
 )
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.exceptions import AuthenticationFailed
@@ -61,7 +63,6 @@ class LevelList(generics.ListAPIView):
             return Level.objects.all()
         else:
             return None
-
 
 class QuestionList(generics.ListAPIView):
     """
