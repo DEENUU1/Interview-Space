@@ -28,15 +28,27 @@ class ProgrammingLang(models.Model):
         return self.name
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Category'
+        verbose_name_plural = "Categories"
+
+    def __str__(self):
+        return self.name
+
 class Question(models.Model):
     name = models.CharField(max_length=50)
     content = models.TextField()
     content_code = models.TextField()
     date_create = models.DateTimeField(auto_now=True)
     programming_lang = models.ForeignKey(ProgrammingLang, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    
     class Meta:
         ordering = ('name',)
         verbose_name = 'Question'

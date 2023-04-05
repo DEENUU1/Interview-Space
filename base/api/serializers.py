@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Level, ProgrammingLang, Question, Comment, Favourite
+from .models import Level, ProgrammingLang, Question, Comment, Favourite, Category
 
 
 class LevelModelSerializer(serializers.ModelSerializer):
@@ -35,7 +35,7 @@ class QuestionModelSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Question
-        fields = ('name', 'content', 'content_code', 'date_create', 'programming_lang', 'level', 'author')
+        fields = ('name', 'content', 'content_code', 'date_create', 'programming_lang', 'level', 'author', 'category')
 
 
 class CommentModelSerializer(serializers.ModelSerializer):
@@ -60,3 +60,16 @@ class FavouriteModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favourite
         fields = ('user', 'question')
+
+
+class CategoryModelSerializer(serializers.ModelSerializer):
+    """ 
+    Serializes a Category model instance into JSON-compatible data.
+    Attributes:
+        Meta: A class that contains metadata about the CategoryModelSerializer.
+        It specifies the model class to use and the fields to include in the serialized data.
+    """
+
+    class Meta:
+        model = Category
+        fields = ('name')

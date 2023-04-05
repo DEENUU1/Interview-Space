@@ -1,11 +1,13 @@
 from rest_framework import generics, permissions
-from .models import Level, ProgrammingLang, Question, Comment, Favourite
+from .models import Level, ProgrammingLang, Question, Comment, Favourite, Category
 from .serializers import (
     LevelModelSerializer,
     ProgrammingLangModelSerializer,
     QuestionModelSerializer,
     CommentModelSerializer,
-    FavouriteModelSerializer
+    FavouriteModelSerializer,
+    CategoryModelSerializer,
+
 )
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.exceptions import AuthenticationFailed
@@ -63,6 +65,24 @@ class LevelList(generics.ListAPIView):
             return None
 
 
+class CategoryList(generics.ListAPIView):
+    """
+
+    """
+    queryset = Category.objects.all()
+    serializer_class = CategoryModelSerializer
+    authentication_classes = (ApiKeyAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    pagination_class = ApiPagination
+
+    def get_queryset(self):
+        api_key = self.request.query_params.get('api_key', None)
+        if api_key:
+            return Category.objects.all()
+        else:
+            return None
+
+
 class QuestionList(generics.ListAPIView):
     """
     /questions/?level=X&lang=X&api_key=X
@@ -77,6 +97,7 @@ class QuestionList(generics.ListAPIView):
         queryset = Question.objects.all()
         level = self.request.query_params.get('level', None)
         programming_lang = self.request.query_params.get('lang', None)
+        category = self.request.query_params.get('category', None)
         api_key = self.request.query_params.get('api_key', None)
         
         if api_key is None:
@@ -85,7 +106,9 @@ class QuestionList(generics.ListAPIView):
             queryset = queryset.filter(level=level)
         if programming_lang is not None:
             queryset = queryset.filter(programming_lang=programming_lang)
-        
+        if category is not None:
+            queryset = queryset.filter(category=category)
+            
         return queryset
     
 
