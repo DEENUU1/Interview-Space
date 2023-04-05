@@ -37,3 +37,10 @@ def logout_user(request):
     logout(request)
     return Response({'success': True})
 
+
+@api_view(['GET'])
+def profile_user(request):
+    user = request.user
+    if user.is_authenticated:
+        return Response({'Your username': user.username})
+    return Response({"error": "You are not logged in."})
