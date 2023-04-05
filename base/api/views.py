@@ -143,8 +143,6 @@ class AddToFavourite(generics.CreateAPIView):
     
     """
     serializer_class = FavouriteModelSerializer
-    authentication_classes = (ApiKeyAuthentication,)
-    permission_classes = (permissions.IsAuthenticated,)
 
     def get_object(self):
         question_id = self.kwargs.get('question_id')
@@ -152,3 +150,15 @@ class AddToFavourite(generics.CreateAPIView):
     
     def perform_create(self, serializer):
         serializer.save(user=self.request.user, question=self.get_object())
+
+
+class FavouriteDelete(generics.DestroyAPIView):
+    queryset = Favourite.objects.all()
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            favourite = self.queryset.get(user=request.user, question_id=kwargs['question_id'])
+            favourite.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except:
+            return Response({"error": "Favourite not found"}, status=status.HTTP_404_NOT_FOUND)
