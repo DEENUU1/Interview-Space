@@ -110,7 +110,19 @@ class QuestionList(generics.ListAPIView):
             queryset = queryset.filter(category=category)
             
         return queryset
+
+
+class QuestionDetail(generics.RetrieveAPIView):
+    """
     
+    """
+    queryset = Question.objects.all()
+    serializer_class = QuestionModelSerializer
+    authentication_classes = (ApiKeyAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
 class QuestionCreateView(generics.CreateAPIView):
     """
