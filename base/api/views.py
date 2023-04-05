@@ -162,13 +162,13 @@ class CommentList(generics.ListAPIView):
     
     def get_queryset(self):
         queryset = Comment.objects.all()
-        question = self.request.query_params.get('question', None)
+        pk = self.kwargs['pk']
         api_key = self.request.query_params.get('api_key', None)
         
         if api_key is None:
             return queryset.none() 
-        if question is not None:
-            queryset = queryset.filter(question=question)
+        if pk is not None:
+            queryset = queryset.filter(question=pk)
     
         return queryset
 
