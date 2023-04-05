@@ -97,6 +97,7 @@ class QuestionList(generics.ListAPIView):
         queryset = Question.objects.all()
         level = self.request.query_params.get('level', None)
         programming_lang = self.request.query_params.get('lang', None)
+        category = self.request.query_params.get('category', None)
         api_key = self.request.query_params.get('api_key', None)
         
         if api_key is None:
@@ -105,7 +106,9 @@ class QuestionList(generics.ListAPIView):
             queryset = queryset.filter(level=level)
         if programming_lang is not None:
             queryset = queryset.filter(programming_lang=programming_lang)
-        
+        if category is not None:
+            queryset = queryset.filter(category=category)
+            
         return queryset
     
 

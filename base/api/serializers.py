@@ -35,7 +35,7 @@ class QuestionModelSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Question
-        fields = ('name', 'content', 'content_code', 'date_create', 'programming_lang', 'level', 'author')
+        fields = ('name', 'content', 'content_code', 'date_create', 'programming_lang', 'level', 'author', 'category')
 
 
 class CommentModelSerializer(serializers.ModelSerializer):
