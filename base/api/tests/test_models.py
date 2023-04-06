@@ -68,4 +68,7 @@ class ModelsValidDataTestCase(TestCase):
         self.assertEqual(self.comment.name, "You are right")
         self.assertEqual(self.comment.question, self.question)
         self.assertEqual(self.comment.author, self.user)
-        
+    
+    def test_favourite_model_valid_data(self) -> None:
+        self.assertEqual(self.favourite.user, self.user)
+        self.assertEqual(self.favourite.question, self.question)
