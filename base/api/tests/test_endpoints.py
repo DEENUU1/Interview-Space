@@ -49,3 +49,17 @@ class QuestionListTestCase(BaseTestCase):
         url = reverse('api:question-list')
         response = self.client.get(url, {'api_key': 'invalid_api_key'})
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+class QuestionDetailsTestCase(BaseTestCase):
+    def test_question_details_without_api_key_auth(self) -> None:
+        pk = 1
+        url = reverse('api:question-details', args=[pk])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_question_details_with_invalid_api_key_auth(self) -> None:
+        pk = 1
+        url = reverse('api:question-details', args=[pk])
+        response = self.client.get(url, {'api_key': 'invalid_api_key'})
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
