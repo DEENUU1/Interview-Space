@@ -55,12 +55,17 @@ class ModelsValidDataTestCase(TestCase):
         self.assertEqual(self.language.name, "Python")
 
     def test_category_model_valid_data(self) -> None:
-        self.assertEqual(self.category, "WebDev")
+        self.assertEqual(self.category.name, "Web dev")
 
     def test_question_model_valid_data(self) -> None:
         self.assertEqual(self.question.name, "Python slow or fast")
         self.assertEqual(self.question.programming_lang, self.language)
         self.assertEqual(self.question.category, self.category)
-        self.assertEqual(self.question.level, self.question)
+        self.assertEqual(self.question.level, self.level)
         self.assertEqual(self.question.author, self.user)
+
+    def test_comment_model_valid_data(self) -> None:
+        self.assertEqual(self.comment.name, "You are right")
+        self.assertEqual(self.comment.question, self.question)
+        self.assertEqual(self.comment.author, self.user)
         
