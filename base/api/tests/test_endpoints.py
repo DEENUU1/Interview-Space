@@ -65,18 +65,6 @@ class QuestionDetailsTestCase(BaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
-class QuestionCreateTestCase(BaseTestCase):
-    def test_question_create_without_api_key_auth(self) -> None:
-        url = reverse('api:question-create')
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-
-    def test_question_create_with_invalid_api_key_auth(self) -> None:
-        url = reverse('api:question-create')
-        response = self.client.get(url, {'api_key': 'invalid_api_key'})
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-
-
 class LanguageListTestCase(BaseTestCase):
     def test_language_list_with_api_key_auth(self) -> None:
         url = reverse('api:languages-list')
@@ -92,3 +80,17 @@ class LanguageListTestCase(BaseTestCase):
         url = reverse('api:languages-list')
         response = self.client.get(url, {'api_key': 'invalid_api_key'})
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+class CommentsListTestCase(BaseTestCase):
+    def test_comments_list_without_api_key_auth(self) -> None:
+        url = reverse('api:comments-list', args=[1])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_comments_list_with_invalid_api_key_auth(self) -> None:
+        url = reverse('api:comments-list', args=[1])
+        response = self.client.get(url, {'api_key': 'invalid_api_key'})
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
