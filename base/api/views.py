@@ -15,6 +15,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.authentication import SessionAuthentication
 
 
 class ApiKeyAuthentication(TokenAuthentication):
@@ -129,7 +130,7 @@ class QuestionCreateView(generics.CreateAPIView):
     
     """
     serializer_class = QuestionModelSerializer
-    authentication_classes = (ApiKeyAuthentication,)
+    authentication_classes = (SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
 
@@ -178,7 +179,7 @@ class CommentCreate(generics.CreateAPIView):
     
     """
     serializer_class = CommentModelSerializer
-    authentication_classes = (ApiKeyAuthentication,)
+    authentication_classes = (SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
