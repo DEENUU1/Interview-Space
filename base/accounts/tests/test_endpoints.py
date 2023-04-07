@@ -21,3 +21,12 @@ class RegisterEndpointTestCase(APITestCase):
                  'password': 'test' }
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.data, {'error': "Password is too short. Your password should have at least 8 characters."} )
+
+
+class LoginEndpointTestCase(APITestCase):
+    def test_login_without_data(self) -> None:
+        url = reverse('accounts:login')
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        
