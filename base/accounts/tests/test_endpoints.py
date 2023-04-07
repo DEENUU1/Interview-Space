@@ -29,4 +29,11 @@ class LoginEndpointTestCase(APITestCase):
         response = self.client.post(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        
+
+class LogoutEndpointTestCase(APITestCase):
+    def test_logout(self) -> None:
+        url = reverse('accounts:logout')
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
