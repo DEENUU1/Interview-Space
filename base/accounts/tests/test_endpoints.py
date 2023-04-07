@@ -37,3 +37,9 @@ class LogoutEndpointTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
+class ProfileEndpointTestCase(APITestCase):
+    def test_profile_endpoint(self) -> None:
+        url = reverse('accounts:profile')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, {'error': 'You are not logged in.'})
